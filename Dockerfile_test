@@ -1,0 +1,14 @@
+ARG image
+ARG tag
+
+ENV image = $image
+
+ENV tag = $tag
+
+FROM image:tag 
+
+RUN pip3 install -U pytest
+
+COPY tests /opt/src
+
+CMD ["pytest", "tests"]
