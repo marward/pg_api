@@ -1,0 +1,37 @@
+# docker-compose.yml
+version: '3'
+
+services:
+  database:
+    image: "postgres"
+    restart: always
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRESS_PASSWORD: "admin"
+      POSTGRESS_DB: "pg1"
+      POSTGRESS_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable"
+    volumes:
+      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+    networks:
+      - main-network
+
+  server: 
+    build: .
+    networks:
+      - main-network
+    environment:
+      db_connection_url: "postgresql://admin:admin@172.20.0.2:5432/pg1"
+    depends_on:
+      - database
+    ports:
+      - "1234:1234"
+
+
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose
+
+
+networks:
+  main-network:
+    driver: "bridge"
