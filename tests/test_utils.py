@@ -3,16 +3,24 @@ from utils import dict_to_string
 from utils import get_query
 
 
+class FakeRow:
+    def __init__(self, d):
+     
+        self.d = d
+    def _asdict(self):
+        return self.d
+
+
 class TestDictToString:
     def test_empty_dict(self):
-        empty_dict = [dict()]
+        empty_dict = [FakeRow({})]
         got = dict_to_string(empty_dict)
-        assert got == ''
+        assert got == '\n'
 
     def test_single_dict(self):
-        single_dict = [{'a': 1, 'b': 2}]
+        single_dict = [FakeRow({'a': 1,'b': 2})]
         got = dict_to_string(single_dict)
-        assert got == '"a": 1; "b": 2\n'
+        assert got == 'a: 1;b: 2\n'
 
 
 class TestGetQuery:

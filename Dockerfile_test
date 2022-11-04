@@ -1,14 +1,11 @@
-ARG image
-ARG tag
-
-ENV image = $image
-
-ENV tag = $tag
-
-FROM image:tag 
+FROM postgres_server:latest 
 
 RUN pip3 install -U pytest
 
-COPY tests /opt/src
+WORKDIR /opt/src
 
-CMD ["pytest", "tests"]
+COPY tests/*  /opt/src/
+
+RUN ls /opt/src
+
+CMD ["pytest"]
