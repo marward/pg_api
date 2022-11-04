@@ -1,19 +1,9 @@
 import sqlalchemy
 from sqlalchemy import create_engine
 import json
+from utils import dict_to_string
 
 
-def dict_to_string(d):
-    fin_row = ''
-    for el in d:
-        fin_row += ";".join(
-            map(
-                lambda v: f"{v[0]}: {v[1]}", 
-                el._asdict().items()
-            )
-        ) + "\n"
-    print(fin_row)
-    return fin_row
 
 
 class DataBase:
@@ -25,9 +15,9 @@ class DataBase:
 
     def _fetch_db(self, query):
         self.conn = self.db.connect()
-        result = self.conn.execute(query)
-        res_dict =  result.fetchall()
-        return dict_to_string(res_dict)
+        result = self.conn.execute(query).fetchall()
+        return dict_to_string(result)
+        
 
 
     def safe_fetch(self, query):
