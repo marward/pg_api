@@ -1,6 +1,6 @@
 from aiohttp import web
 from db import DataBase
-
+from utils import get_query
 import os
 import time
 
@@ -11,10 +11,12 @@ async def handle(request):
     result = db.safe_fetch(query)
     return web.Response(text=result)
 
+def hw(request):
+	return web.Response(text='hello world')
 
 def init_app():
     app = web.Application()
-    app.add_routes([web.get("/get", handle)])
+    app.add_routes([web.get("/get_data", handle), web.get("/hw", hw)])
     db_connection_url = os.environ["db_connection_url"]
     db = DataBase(db_connection_url)
     return app, db 
