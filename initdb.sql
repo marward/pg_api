@@ -1,4 +1,3 @@
-create database docker; 
 
 create schema work_schema; 
 
