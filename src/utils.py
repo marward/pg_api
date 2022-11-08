@@ -15,6 +15,6 @@ def dict_to_string(d):
 
 
 def get_query(request_type):
-    with open(os.path.join("sql_scripts",  request_type + ".sql"), "r") as f:
+    with open(os.path.join("sql_scripts", str(request_type) + ".sql"), "r") as f:
         query =  f.read()
     return query
