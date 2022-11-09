@@ -11,8 +11,6 @@ async def handle(request):
     result = db.safe_fetch(query)
     return web.Response(text=result)
 
-def hw(request):
-	return web.Response(text='hello world')
 
 def init_app():
     app = web.Application()
